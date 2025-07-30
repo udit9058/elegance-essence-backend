@@ -1,10 +1,27 @@
 services:
   - type: web
-    name: elegance-laravel-api
+    name: elegance-backend
     env: docker
     plan: free
+    repo: https://github.com/udit9058/elegance-essence-backend
     branch: main
-    dockerfilePath: Dockerfile
-    buildCommand: ""
-    startCommand: ""
-    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: false
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        value: your-planetscale-host-name
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        value: your-db-name
+      - key: DB_USERNAME
+        value: your-username
+      - key: DB_PASSWORD
+        value: your-password
