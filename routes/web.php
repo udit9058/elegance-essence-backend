@@ -13,3 +13,6 @@ Route::get('/rough', [RoughController::class, 'index'])->name('rough.index');
 Route::post('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 
+Route::get('/ping', function () {
+    return 'Backend is working!';
+});
