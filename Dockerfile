@@ -1,19 +1,23 @@
 FROM php:8.2-fpm
 
+# Fix timezone (optional)
+ENV TZ=Asia/Kolkata
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
     libjpeg-dev \
+    libfreetype6-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
+    libzip-dev \
     unzip \
     curl \
     git \
-    libzip-dev \
     libssl-dev \
-    libmysqlclient-dev \
+    default-mysql-client \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Install Composer
@@ -28,12 +32,12 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions
+# Laravel permissions
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Expose port
+# Expose port 8000
 EXPOSE 8000
 
-# Laravel serve
+# Laravel serve command
 CMD php artisan serve --host=0.0.0.0 --port=8000
