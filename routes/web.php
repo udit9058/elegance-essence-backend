@@ -16,3 +16,5 @@ Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payme
 Route::get('/ping', function () {
     return 'Backend is working!';
 });
+
+Route::get('/rough', [RoughController::class, 'index'])->name('rough.index');
